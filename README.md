@@ -7,8 +7,13 @@ A lightweight repository for collecting notes, drafts, and snippets in Markdown.
 ```
 .
 ├── README.md   # 本文件：仓库说明
+├── index.html  # 笔记索引页（自包含，双击即可打开）
 └── notes/      # 放置日常笔记（可自行创建）
 ```
+
+## 索引页
+
+`index.html` 是一个零依赖的单文件页面：内嵌笔记数据，支持关键词搜索（按 `/` 聚焦）、标签筛选与深浅色主题切换。新增笔记时，在文件内的 `NOTES` 数组追加一条记录即可。
 
 ## Conventions
 

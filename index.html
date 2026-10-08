@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Markdown Notes · 笔记索引</title>
+<meta name="description" content="codex-test 仓库的笔记索引页：按标签与关键词浏览日常笔记、草稿与代码片段。" />
+<style>
+  :root {
+    --bg: #fbfbf9;
+    --panel: #ffffff;
+    --text: #1c1c1a;
+    --muted: #6b6b66;
+    --border: #e4e3dd;
+    --accent: #2f6f4f;
+    --accent-soft: #e7f1ea;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px rgba(0, 0, 0, .04);
+  }
+  html[data-theme="dark"] {
+    --bg: #14161a;
+    --panel: #1b1e23;
+    --text: #e8e8e6;
+    --muted: #9aa0a6;
+    --border: #2b3037;
+    --accent: #7fc9a0;
+    --accent-soft: #1f3128;
+    --shadow: none;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header { display: flex; align-items: flex-start; gap: 16px; justify-content: space-between; }
+  h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: -.01em; }
+  .lede { margin: 0; color: var(--muted); font-size: 15px; max-width: 56ch; }
+
+  .theme-toggle {
+    flex: none; border: 1px solid var(--border); background: var(--panel); color: var(--text);
+    border-radius: 999px; padding: 7px 14px; font-size: 13px; cursor: pointer;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 28px 0 8px; }
+  .search {
+    flex: 1 1 260px; display: flex; align-items: center; gap: 8px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px;
+  }
+  .search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .search input { flex: 1; border: 0; background: none; color: var(--text); font-size: 15px; outline: none; }
+  .search kbd {
+    font: 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 4px; padding: 3px 5px;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 24px; }
+  .tag {
+    border: 1px solid var(--border); background: var(--panel); color: var(--muted);
+    border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer;
+  }
+  .tag:hover { color: var(--text); border-color: var(--muted); }
+  .tag[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+
+  .count { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+
+  .list { display: grid; gap: 14px; }
+  article {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  article h2 { font-size: 17px; margin: 0 0 4px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+  .meta time { font-variant-numeric: tabular-nums; }
+  .source {
+    margin: 0 0 10px; padding-left: 12px; border-left: 3px solid var(--border);
+    color: var(--muted); font-size: 14px;
+  }
+  ul.points { margin: 0; padding-left: 20px; }
+  ul.points li { margin: 3px 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .chip { font-size: 12px; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 2px 8px; }
+  mark { background: #ffe58a; color: inherit; border-radius: 3px; padding: 0 2px; }
+  html[data-theme="dark"] mark { background: #6b5a12; color: #fff; }
+
+  .empty { text-align: center; color: var(--muted); padding: 48px 0; border: 1px dashed var(--border); border-radius: 12px; }
+  footer { margin-top: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 16px; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Markdown Notes</h1>
+      <p class="lede">本仓库的笔记索引页。所有内容内嵌在本文件中，可直接双击打开，无需构建或服务器。</p>
+    </div>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深浅色主题">深色</button>
+  </header>
+
+  <div class="toolbar">
+    <label class="search">
+      <span aria-hidden="true">🔍</span>
+      <input id="q" type="search" placeholder="搜索标题、来源或要点…" autocomplete="off" />
+      <kbd>/</kbd>
+    </label>
+  </div>
+
+  <div class="tags" id="tags"></div>
+
+  <p class="count" id="count"></p>
+  <div class="list" id="list"></div>
+  <div class="empty" id="empty" hidden>没有匹配的笔记，换个关键词试试。</div>
+
+  <footer>
+    <p>数据源：<code>index.html</code> 内的 <code>NOTES</code> 数组 · 新增笔记时在数组里追加一条即可。</p>
+    <p>约定见 <a href="README.md">README.md</a>：一个主题一个文件，文件名小写中划线。</p>
+  </footer>
+</div>
+
+<script>
+  const NOTES = [
+    {
+      date: "2026-10-09",
+      title: "某个想法",
+      source: "会议记录",
+      tags: ["draft"],
+      points: ["要点一", "要点二"],
+      file: "notes/some-idea.md"
+    },
+    {
+      date: "2026-10-08",
+      title: "API 设计取舍",
+      source: "个人整理",
+      tags: ["api", "design"],
+      points: [
+        "优先保持向后兼容，新增字段而不是修改语义",
+        "错误响应统一为 { code, message, details }",
+        "分页统一使用 cursor，避免深翻页性能问题"
+      ],
+      file: "notes/api-design.md"
+    },
+    {
+      date: "2026-10-05",
+      title: "常用 Git 片段",
+      source: "日常速记",
+      tags: ["git", "snippet"],
+      points: [
+        "撤销上一次提交但保留改动：git reset --soft HEAD~1",
+        "查看某行的历史：git log -L 10,20:path/to/file",
+        "临时保存工作区：git stash push -m \"wip\""
+      ],
+      file: "notes/git-snippets.md"
+    },
+    {
+      date: "2026-09-28",
+      title: "仓库结构约定",
+      source: "README",
+      tags: ["convention"],
+      points: [
+        "一个主题一个文件，文件名使用小写中划线",
+        "每篇笔记以一级标题开头，顶部用引用块写明日期与来源",
+        "代码片段使用围栏代码块并标注语言"
+      ],
+      file: "README.md"
+    }
+  ];
+
+  const state = { q: "", tag: "all" };
+  const $list = document.getElementById("list");
+  const $tags = document.getElementById("tags");
+  const $count = document.getElementById("count");
+  const $empty = document.getElementById("empty");
+  const $q = document.getElementById("q");
+
+  const escapeHtml = (s) =>
+    s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  const highlight = (text, q) => {
+    const safe = escapeHtml(text);
+    if (!q) return safe;
+    const needle = escapeHtml(q).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return safe.replace(new RegExp(needle, "gi"), (m) => `<mark>${m}</mark>`);
+  };
+
+  function matches(note) {
+    if (state.tag !== "all" && !note.tags.includes(state.tag)) return false;
+    if (!state.q) return true;
+    const hay = [note.title, note.source, note.file, note.tags.join(" "), note.points.join(" ")]
+      .join(" ")
+      .toLowerCase();
+    return state.q.toLowerCase().split(/\s+/).every((w) => hay.includes(w));
+  }
+
+  function renderTags() {
+    const all = new Set();
+    NOTES.forEach((n) => n.tags.forEach((t) => all.add(t)));
+    const names = ["all", ...[...all].sort()];
+    $tags.innerHTML = names
+      .map((t) => {
+        const label = t === "all" ? "全部" : t;
+        return `<button class="tag" type="button" data-tag="${escapeHtml(t)}" aria-pressed="${
+          state.tag === t
+        }">${escapeHtml(label)}</button>`;
+      })
+      .join("");
+  }
+
+  function renderList() {
+    const notes = NOTES.filter(matches).sort((a, b) => b.date.localeCompare(a.date));
+    $count.textContent = `共 ${NOTES.length} 篇笔记，显示 ${notes.length} 篇`;
+    $empty.hidden = notes.length !== 0;
+    $list.innerHTML = notes
+      .map((n) => {
+        const q = state.q;
+        return `<article>
+          <h2>${highlight(n.title, q)}</h2>
+          <div class="meta">
+            <time datetime="${escapeHtml(n.date)}">${escapeHtml(n.date)}</time>
+            <span>·</span>
+            <span>${highlight(n.file, q)}</span>
+          </div>
+          ${n.source ? `<p class="source">来源：${highlight(n.source, q)}</p>` : ""}
+          <ul class="points">${n.points.map((p) => `<li>${highlight(p, q)}</li>`).join("")}</ul>
+          <div class="chips">${n.tags.map((t) => `<span class="chip">${escapeHtml(t)}</span>`).join("")}</div>
+        </article>`;
+      })
+      .join("");
+  }
+
+  $tags.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tag");
+    if (!btn) return;
+    state.tag = btn.dataset.tag;
+    renderTags();
+    renderList();
+  });
+
+  $q.addEventListener("input", () => {
+    state.q = $q.value.trim();
+    renderList();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && document.activeElement !== $q) {
+      e.preventDefault();
+      $q.focus();
+    }
+    if (e.key === "Escape" && document.activeElement === $q) {
+      $q.value = "";
+      state.q = "";
+      renderList();
+      $q.blur();
+    }
+  });
+
+  const root = document.documentElement;
+  const saved = localStorage.getItem("notes-theme");
+  if (saved) root.dataset.theme = saved;
+  else if (window.matchMedia("(prefers-color-scheme: dark)").matches) root.dataset.theme = "dark";
+
+  const $toggle = document.getElementById("themeToggle");
+  const syncToggle = () => {
+    $toggle.textContent = root.dataset.theme === "dark" ? "浅色" : "深色";
+  };
+  $toggle.addEventListener("click", () => {
+    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+    localStorage.setItem("notes-theme", root.dataset.theme);
+    syncToggle();
+  });
+
+  syncToggle();
+  renderTags();
+  renderList();
+</script>
+</body>
+</html>
